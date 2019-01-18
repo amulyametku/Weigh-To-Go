@@ -11,6 +11,7 @@ const DIST = "dist";
 const DIST_PATH = path.join(__dirname, DIST);
 
 module.exports = {
+  //entry: {"index.html": "./app/index/html"},
   entry: "./src/index.js",
   output: {
     path: DIST_PATH,
