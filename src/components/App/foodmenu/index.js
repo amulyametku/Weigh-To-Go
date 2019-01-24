@@ -1,93 +1,57 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-var data = { a: 1, b: 2 };
 
 class Foodmenu extends React.Component{
+    constructor()
+  {
+    super();
+    this.state={
+      data: []
+    }
+  }
 
-    render() {
+  componentDidMount()
+  {
+    <h1> JSON fetching </h1>
+    const url = "http://localhost:9000/foods"; 
     
-        return (<div><pre>{JSON.stringify(data, null, 2) }</pre></div>);
-   }
+    let headers = new Headers();
+
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+
+    headers.append('Access-Control-Allow-Origin', 'http://localhost:9000/foods');
+    headers.append('Access-Control-Allow-Credentials', 'true');
+
+    headers.append('GET', 'POST');
+
+    fetch(url, {
+        headers: headers,
+        method: 'GET'
+    })
+    .then(response => response.json())
+    .then(contents => console.log(contents))
+    
+    .catch(() => console.log("Can’t access " + url + " response. "))
    
+  }
+
+  render()
+  {
+    return(
+        <div>
+                <table>
+                    <thead>
+                        <th>Item</th>
+                        <th>Calories</th>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+    )
+  }
 }
-ReactDOM.render(<Foodmenu/>, document.getElementById('root'));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-class Foodmenu extends React.Component{
-
-    constructor(props) {
-        super(props);
-        this.state = {
-          error: null,
-          isLoaded: false,
-          items: []
-        };
-      }
-    
-    componentDidMount() {
-       fetch("http://10.10.200.25:9000/foods")
-     
-      .then(res => res.json())
-      .then(
-        //console.log(res)
-        
-        (result) => {
-            this.setState({
-              isLoaded: true,
-              items: result.items
-            });
-          },
-          (error) => {
-            this.setState({
-              isLoaded: true,
-              error
-            });
-          }
-        )
-    }
-
-    render(){
-        const { error, isLoaded, items } = this.state;
-        if (error) {
-             return <div>Error: {error.message}</div>;
-        
-        } else {
-            return(
-                <div>
-                <h1>Food items</h1>
-
-                <ul>
-                    {items.map(item => (
-                        <li key={item.name}>
-                        { item.name} {item.calories}
-
-
-                        </li>
-                     ))}
-                 </ul>
-        </div>
-        );
-    }
-}
-
-} */
 export default Foodmenu;
