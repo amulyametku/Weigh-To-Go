@@ -31,8 +31,10 @@ class Foodmenu extends React.Component{
         method: 'GET'
     })
     .then(response => response.json())
-    .then(contents => console.log(contents))
-    
+    .then(contents => {console.log(contents);
+                        this.setState ({
+                        data : contents.data})
+         })
     .catch(() => console.log("Can’t access " + url + " response. "))
    
   }
@@ -41,16 +43,19 @@ class Foodmenu extends React.Component{
   {
     return(
         <div>
-                <table>
-                    <thead>
-                        <th>Item</th>
-                        <th>Calories</th>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-            </div>
+        <ul>
+                    {this.state.data && this.state.data.map(function(data, index) {
+                    return (
+                        <div key={index}>
+                                <h1>{this.data.name}</h1>
+                                <p>{this.data.calories}</p>
+                        </div>
+                    )
+                    }
+
+                )}
+            </ul>
+        </div>
     )
   }
 }
