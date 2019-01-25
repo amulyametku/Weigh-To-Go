@@ -1,7 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
-
-
+//import ReactDOM from "react-dom";
+import { Table ,Button } from 'react-bootstrap';
 
 
 //Running ok
@@ -17,14 +16,14 @@ class Foodmenu extends React.Component{
   componentDidMount()
   {
 
-    const url = "http://10.10.200.25:9000/foods"; 
-    
+    //const url = "http://10.10.200.25:9000/foods"; 
+    const url = "http://localhost:9000/foods"; 
     let headers = new Headers();
 
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
 
-    headers.append('Access-Control-Allow-Origin', 'http://10.10.200.25:9000/foods');
+    headers.append('Access-Control-Allow-Origin', url);
     headers.append('Access-Control-Allow-Credentials', 'true');
 
     headers.append('GET', 'POST');
@@ -46,7 +45,31 @@ class Foodmenu extends React.Component{
   {
     console.log("Render: "+ this.state.data)
     return(
-       
+        <div>
+
+        <Table striped bordered condensed hover>
+        <thead>
+          <tr>
+           
+            <th>Food Name</th>
+            <th>Food Calorie</th>
+          </tr>
+        </thead>
+        <tbody> {this.state.data.map(function(foodItem, index) {
+             return (
+                <tr key={index}>
+                        <td>{foodItem.name}</td>
+                        <td>{foodItem.calories}</td>
+                </tr>
+            )
+        })}
+        </tbody>
+        </Table>
+
+        <Button bsStyle="success" bsSize="large" block>Submit</Button>
+
+        </div>
+       /*
         <div>
         <ul>
                     {this.state.data.map(function(foodItem, index) {
@@ -61,7 +84,10 @@ class Foodmenu extends React.Component{
 
                 )}
             </ul>
+  
+
         </div>
+        */            
     )
   }
 }
