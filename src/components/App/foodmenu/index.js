@@ -1,22 +1,32 @@
 import React from "react";
-//import ReactDOM from "react-dom";
 import { Table ,Button } from 'react-bootstrap';
 
 
-//Running ok
 class Foodmenu extends React.Component{
-    constructor()
-  {
-    super();
-    this.state={
-      data: []
+
+    constructor(props){
+    super(props);
+    this.state = {
+        data: []
     }
-  }
+    this.onAddClick = this.onAddClick.bind(this);
+    }
 
-  componentDidMount()
-  {
+    onAddClick = function(index){
+        console.log('Name: ' + index.name);
+        console.log('Calories: ' + index.calories);
+        console.log('Index: ' + index);
+        this.props.history.push({
+          pathname: '/',
+           state: {
+              key: index
+          } 
+      });  
+    }
 
-    //const url = "http://10.10.200.25:9000/foods"; 
+
+    componentDidMount(){
+
     const url = "http://localhost:9000/foods"; 
     let headers = new Headers();
 
@@ -46,20 +56,21 @@ class Foodmenu extends React.Component{
     console.log("Render: "+ this.state.data)
     return(
         <div>
-
         <Table striped bordered condensed hover>
         <thead>
           <tr>
-           
             <th>Food Name</th>
             <th>Food Calorie</th>
           </tr>
         </thead>
-        <tbody> {this.state.data.map(function(foodItem, index) {
+        <tbody> {this.state.data.map((foodItem, index) => {
              return (
-                <tr key={index}>
+                <tr key={index} >
                         <td>{foodItem.name}</td>
                         <td>{foodItem.calories}</td>
+                        
+                        <td> <Button bsSize="small">Edit</Button></td>
+                        <td>  <Button bsStyle="primary" bsSize="small" onClick={() => this.onAddClick(foodItem)}>Add</Button></td>
                 </tr>
             )
         })}
@@ -68,26 +79,7 @@ class Foodmenu extends React.Component{
 
         <Button bsStyle="success" bsSize="large" block>Submit</Button>
 
-        </div>
-       /*
-        <div>
-        <ul>
-                    {this.state.data.map(function(foodItem, index) {
-                    return (
-                        <div key={index}>
-                                <h1>{foodItem.id}</h1>
-                                <h1>{foodItem.name}</h1>
-                                <p>{foodItem.calories}</p>
-                        </div>
-                    )
-                    }
-
-                )}
-            </ul>
-  
-
-        </div>
-        */            
+        </div> 
     )
   }
 }
