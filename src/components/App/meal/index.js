@@ -1,12 +1,26 @@
 import React from "react";
 import styled from "styled-components"
 import { withRouter } from 'react-router-dom';
+import Foodmenu from "../foodmenu";
 
 class Meal extends React.Component{
   
     constructor(props){
         super(props);
         this.routeChange = this.routeChange.bind(this);
+        //this.handler = this.handler.bind(this);
+        this.state = {
+            id : '5',
+            // name : this.props.name,
+            // calories : this.props.calories
+        }
+    }
+
+    componentDidMount(){
+        console.log(this.props.location.state);
+        this.setState({
+            id: this.props.location.state.id
+        })
     }
 
     routeChange(){
@@ -14,8 +28,12 @@ class Meal extends React.Component{
         this.props.history.push(path);
         }
 
+
+    
     render(){
+        console.log('parent'+ this.state.id);
         return (
+           
             <div>
             <Wrapper>
                 <Title>

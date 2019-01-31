@@ -12,22 +12,31 @@ class Foodmenu extends React.Component{
     this.onAddClick = this.onAddClick.bind(this);
     }
 
-    onAddClick = function(index){
-        console.log('Name: ' + index.name);
-        console.log('Calories: ' + index.calories);
-        console.log('Index: ' + index);
+    onAddClick = function(foodItem){
+       
+        // console.log('Name: ' + foodItem.name);
+        // console.log('Calories: ' + foodItem.calories);
+        console.log('Index: ' , foodItem);
         this.props.history.push({
           pathname: '/',
            state: {
-              key: index
+              id: foodItem.Id,
+
           } 
       });  
+      
     }
+    /*
+    onAddClick(foodItem){
+      this.setState({id: foodItem}, () =>{
+        console.log('added to parent');
+       })
+    }*/
 
 
     componentDidMount(){
 
-    const url = "http://localhost:9000/foods"; 
+    const url = "http://10.10.200.25:9000/foods"; 
     let headers = new Headers();
 
     headers.append('Content-Type', 'application/json');
@@ -50,6 +59,7 @@ class Foodmenu extends React.Component{
     .catch(() => console.log("Can’t access " + url + " response. "))
    
   }
+
 
   render()
   {

@@ -1,33 +1,43 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-class Fooddetails extends Component {
+import React from "react";
 
-    render() {
-        let news = '';
-
-        if(this.props.location.state.key){
-
-              return (
-                  <div>
-                          <div className="title">{this.props.location.state.key.title}</div>
-                         {/*  <div className="row">this.props.location.key.[score]</div>
-                          <div className="row">this.props.location.key.[by]</div>
-                          <div className="row">this.props.location.key.[karma]</div>
-                          <div className="row">this.props.location.key.[created]</div>  */}
-                  </div>
-                  )
-
-        }
-
-        return(
-
-          <div className="mainStart">
-                <h1> This is a details page </h1>
-                {news}
-                <Link to='/'>Home</Link>
-          </div>
-        )
-      }
+function fetchDetails(id){
+    const request = new Request('/foodmenu/' + id,
+    {method:'GET', headers:{'Content-Type' : 'application/json'}});
+    return fetch(request);
 }
 
-export default Fooddetails;
+export default class Fooddetails extends React.Component{
+
+    
+    state = {
+        id: '',
+        name : '',
+        calories: ''
+    }
+
+    componentDidMount(){
+        let self = this;
+        fetchDetails(this.props.match.params.id)
+        .then(res=> res.json())
+        .then(function(data){
+            self.setState({
+                id: data[0],
+                name : data[1],
+                calories: data[2]
+            })
+            });
+    }
+    
+    render(){
+        return(
+            <div>
+            <section>
+                <h3> View Details </h3>
+                <div> Id : {this.state.id} </div>
+                <div> Name : {this.state.name} </div>
+                <div> Cal : {this.state.calories} </div>
+            </section>
+            </div>
+        )
+    }
+}
