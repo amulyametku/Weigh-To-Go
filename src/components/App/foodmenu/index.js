@@ -7,7 +7,7 @@ class Foodmenu extends React.Component{
     super(props);
     this.state = {
         data: [],
-        value: '1'
+        quantity: ''
     }
     this.onAddClick = this.onAddClick.bind(this);
     this.handleQuantityChange = this.handleQuantityChange.bind(this);
@@ -23,7 +23,8 @@ class Foodmenu extends React.Component{
            state: {
               id: foodItem.Id,
               name : foodItem.name,
-              calories: foodItem.calories
+              calories: foodItem.calories,
+              quantity: this.state.quantity
           } 
       });  
       event.preventDefault();
@@ -31,7 +32,7 @@ class Foodmenu extends React.Component{
    
     componentDidMount(){
 
-    const url = "http://10.10.200.25:9000/foods"; 
+    const url = "http://10.10.200.12:9000/foods"; 
     //const url = "http://localhost:9000/foods"; 
     let headers = new Headers();
 
@@ -58,13 +59,13 @@ class Foodmenu extends React.Component{
 
  
   handleQuantityChange(event) {
-    this.setState({value: event.target.value});
-    console.log("Quantity read: " + this.value);
+    this.setState({quantity: event.target.value});
+    //console.log("Quantity read: " + quantity);
   }
 
   render()
   {
-    console.log("Render: "+ this.state.data)
+    console.log("Render: "+ this.state.quantity)
     return(
         <div>
         <Table striped bordered condensed hover>
@@ -72,7 +73,6 @@ class Foodmenu extends React.Component{
           <tr>
             <th>Food Name</th>
             <th>Food Calorie</th>
-            <th>Quantity</th>
           </tr>
         </thead>
         <tbody> {this.state.data.map((foodItem, index) => {
@@ -80,7 +80,7 @@ class Foodmenu extends React.Component{
                 <tr key={index} >
                         <td>{foodItem.name}</td>
                         <td>{foodItem.calories}</td>                        
-                        <td>  <input type="text" name="quantity" value={this.state.value} onChange={this.handleQuantityChange}/></td>
+                        <td>  <input type="text" ref= {"first val" + this.props.index} name="quantity" value={this.state.quantity} onChange={this.handleQuantityChange}/></td>
                         <td>  <Button bsStyle="primary" bsSize="small" onClick={() => this.onAddClick(foodItem)}>Add</Button></td>
                 </tr>
             )
@@ -95,49 +95,4 @@ class Foodmenu extends React.Component{
   }
 }
 
-
-/*
-//ajax 
-class Foodmenu extends React.Component {
-    constructor(){
-        super() 
-          this.state = {
-            data: []
-          }
-        
-      }
-      componentDidMount() {
-        $.ajax({
-           url: "http://localhost:9000/foods",
-           type: "GET",
-           dataType: 'json',
-           ContentType: 'application/json',
-           success: function(data) {
-             
-             this.setState({data: data});
-           }.bind(this),
-           error: function(jqXHR) {
-             console.log(jqXHR);
-           }.bind(this)
-        })
-      }
-      render() {
-        
-        return (
-          <table>
-          <tbody>{this.state.data && this.state.data.map(function(item, key) {
-                 
-                   return (
-                      <tr key = {key}>
-                          <td>{item.name}</td>
-                          <td>{item.calorie}</td>
-                      </tr>
-                    )
-                 
-                 })}</tbody>
-           </table>
-        )
-      }
-}
-*/
 export default Foodmenu;

@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { withRouter } from 'react-router-dom';
 import Foodmenu from "../foodmenu";
 import FoodTable from "../../foodTable";
+import { Table  } from 'react-bootstrap';
 
 class Meal extends React.Component{
   
@@ -12,7 +13,8 @@ class Meal extends React.Component{
         this.state = {
             id : '',
             name : '',
-            calories: ''
+            calories: '',
+            quantity: ''
         }
     }
 
@@ -22,6 +24,7 @@ class Meal extends React.Component{
             id: this.props.location.state.id,
             name: this.props.location.state.name,
             calories: this.props.location.state.calories,
+            quantity : this.props.location.state.quantity
         })
     }
 
@@ -31,9 +34,10 @@ class Meal extends React.Component{
         }
 
 
-    
+  
+
     render(){
-        console.log('parent'+ this.state.name);
+        console.log('from parent'+ this.state.quantity);
         return (
            
             <div>
@@ -41,16 +45,29 @@ class Meal extends React.Component{
             <Wrapper>
                 <Title>
                     Breakfast                  
-                        <Coloumn> <Button 
-                        onClick={this.routeChange}
-                        > Add item </Button>
-                       
-                        </Coloumn>
+                        <Coloumn> <Button onClick={this.routeChange}> Add item </Button> </Coloumn>
                 </Title>
             </Wrapper>
 
-            <h3>{this.state.name}</h3> 
-            <h3>{this.state.calories}</h3> 
+            {/* <h1> Items consumed </h1> */}
+
+            <Table responsive striped bordered hover>
+            <thead>
+          
+                <tr>
+                <th> NAME </th>
+                <th> CALORIES </th>
+                <th> QUANTITY </th>
+                </tr>
+                <tr>
+                <td>{this.state.name}</td> 
+                <td>{this.state.calories}</td> 
+                <td>{this.state.quantity}</td> 
+                {/* <td> <Button> OK </Button> </td> */}
+                </tr> 
+        
+            </thead>
+            </Table>
             
 
             </div>
