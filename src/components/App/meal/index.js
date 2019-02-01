@@ -1,25 +1,27 @@
-import React from "react";
+import React , { PureComponent }from "react";
 import styled from "styled-components"
 import { withRouter } from 'react-router-dom';
 import Foodmenu from "../foodmenu";
+import FoodTable from "../../foodTable";
 
 class Meal extends React.Component{
   
     constructor(props){
         super(props);
         this.routeChange = this.routeChange.bind(this);
-        //this.handler = this.handler.bind(this);
         this.state = {
-            id : '5',
-            // name : this.props.name,
-            // calories : this.props.calories
+            id : '',
+            name : '',
+            calories: ''
         }
     }
 
     componentDidMount(){
         console.log(this.props.location.state);
         this.setState({
-            id: this.props.location.state.id
+            id: this.props.location.state.id,
+            name: this.props.location.state.name,
+            calories: this.props.location.state.calories,
         })
     }
 
@@ -31,10 +33,11 @@ class Meal extends React.Component{
 
     
     render(){
-        console.log('parent'+ this.state.id);
+        console.log('parent'+ this.state.name);
         return (
            
             <div>
+
             <Wrapper>
                 <Title>
                     Breakfast                  
@@ -45,6 +48,11 @@ class Meal extends React.Component{
                         </Coloumn>
                 </Title>
             </Wrapper>
+
+            <h3>{this.state.name}</h3> 
+            <h3>{this.state.calories}</h3> 
+            
+
             </div>
         );
     }
@@ -88,6 +96,5 @@ const Button = styled.button`
     content: '➕';
   }
 `;
-
 
 export default Meal;

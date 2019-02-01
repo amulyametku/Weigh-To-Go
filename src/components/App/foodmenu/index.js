@@ -1,42 +1,38 @@
 import React from "react";
 import { Table ,Button } from 'react-bootstrap';
 
-
 class Foodmenu extends React.Component{
 
     constructor(props){
     super(props);
     this.state = {
-        data: []
+        data: [],
+        value: '1'
     }
     this.onAddClick = this.onAddClick.bind(this);
+    this.handleQuantityChange = this.handleQuantityChange.bind(this);
     }
 
     onAddClick = function(foodItem){
        
-        // console.log('Name: ' + foodItem.name);
-        // console.log('Calories: ' + foodItem.calories);
-        console.log('Index: ' , foodItem);
+        console.log('Name: ' + foodItem.name);
+        console.log('Calories: ' + foodItem.calories);
+        console.log('Index: ' , foodItem.Id);
         this.props.history.push({
           pathname: '/',
            state: {
               id: foodItem.Id,
-
+              name : foodItem.name,
+              calories: foodItem.calories
           } 
       });  
-      
+      event.preventDefault();
     }
-    /*
-    onAddClick(foodItem){
-      this.setState({id: foodItem}, () =>{
-        console.log('added to parent');
-       })
-    }*/
-
-
+   
     componentDidMount(){
 
     const url = "http://10.10.200.25:9000/foods"; 
+    //const url = "http://localhost:9000/foods"; 
     let headers = new Headers();
 
     headers.append('Content-Type', 'application/json');
@@ -60,6 +56,11 @@ class Foodmenu extends React.Component{
    
   }
 
+ 
+  handleQuantityChange(event) {
+    this.setState({value: event.target.value});
+    console.log("Quantity read: " + this.value);
+  }
 
   render()
   {
@@ -71,15 +72,15 @@ class Foodmenu extends React.Component{
           <tr>
             <th>Food Name</th>
             <th>Food Calorie</th>
+            <th>Quantity</th>
           </tr>
         </thead>
         <tbody> {this.state.data.map((foodItem, index) => {
              return (
                 <tr key={index} >
                         <td>{foodItem.name}</td>
-                        <td>{foodItem.calories}</td>
-                        
-                        <td> <Button bsSize="small">Edit</Button></td>
+                        <td>{foodItem.calories}</td>                        
+                        <td>  <input type="text" name="quantity" value={this.state.value} onChange={this.handleQuantityChange}/></td>
                         <td>  <Button bsStyle="primary" bsSize="small" onClick={() => this.onAddClick(foodItem)}>Add</Button></td>
                 </tr>
             )
