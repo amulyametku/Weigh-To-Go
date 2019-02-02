@@ -10,21 +10,28 @@ class Meal extends React.Component{
         this.routeChange = this.routeChange.bind(this);
         this.calculateTotalCalories = this.calculateTotalCalories.bind(this);
         this.handleOKButton = this.handleOKButton.bind(this);
+        this.handleAddRow = this.handleAddRow.bind(this);
+       
         this.state = {
-            id : '',
-            name : '',
-            calories: '',
-            quantity: ''
+            rows: [{}]
         }
     }
 
+    
     componentDidMount(){
         console.log(this.props.location.state);
+        const item = {
+            id: '',
+            name: '',
+            calories: '',
+            quantity: ''
+          };
         this.setState({
-            id: this.props.location.state.id,
-            name: this.props.location.state.name,
-            calories: this.props.location.state.calories,
-            quantity : this.props.location.state.quantity
+            rows: [...this.state.rows, item]        
+            // id: this.props.location.state.id,
+            // name: this.props.location.state.name,
+            // calories: this.props.location.state.calories,
+            // quantity : this.props.location.state.quantity
         })
     }
 
@@ -42,6 +49,40 @@ class Meal extends React.Component{
         console.log('added');
     }
 
+    handleAddRow = () => {
+        const item = {
+          id: "",
+          name: "",
+          calories: '',
+          quantity: ''
+        };
+        this.setState({
+          rows: [...this.state.rows, item]
+        });
+      };
+
+    handleChange = idx => e => {
+        const { name, calories } = e.target;
+        const rows = [...this.state.rows];
+        rows[idx] = {
+          [name]: value
+        };
+        this.setState({
+          rows
+        });
+    };
+ 
+    handleRemoveRow = () => {
+        this.setState({
+          rows: this.state.rows.slice(0, -1)
+        });
+      };
+      handleRemoveSpecificRow = (idx) => () => {
+        const rows = [...this.state.rows]
+        rows.splice(idx, 1)
+        this.setState({ rows })
+      }
+
     render(){
         console.log('from parent'+ this.state.quantity);
         return (
@@ -51,12 +92,12 @@ class Meal extends React.Component{
             <Wrapper>
                 <Title>
                     Breakfast                  
-                        <Coloumn> <Button onClick={this.routeChange}> Add item </Button> </Coloumn>
+                        <Coloumn> <Button onClick={this.routeChange}> Choose item </Button> </Coloumn>
                 </Title>
             </Wrapper>
 
 
-            <Table responsive striped bordered hover>
+            {/* <Table responsive striped bordered hover>
             <thead>
           
                 <tr>
@@ -71,15 +112,103 @@ class Meal extends React.Component{
                 <td>{this.state.quantity}</td> 
                 <td>{this.calculateTotalCalories(this.state.calories, this.state.quantity)}</td>
                 <td> 
-                    <ButtonGroup >
-                        <Button_OK onclick={this.handleOKButton}>OK</ Button_OK>
-                        <Button_Cancel>Cancel</Button_Cancel>
-                    </ButtonGroup>
+
+                <Button_OK onClick={this.handleOKButton} className="btn btn-primary">
+                Add 
+                </Button_OK>
+
+                <Button_Cancel>Cancel</Button_Cancel>
+                    
                 </td>
                 </tr> 
         
             </thead>
-            </Table>
+            </Table> */}
+
+
+        <div className="container">
+          <div className="row clearfix">
+            <div className="col-md-12 column">
+              <table
+                className="table table-bordered table-hover"
+                id="tab_logic"
+              >
+                <thead>
+                  <tr>
+                    <th className="text-center"> # </th>
+                    <th className="text-center"> Name </th>
+                    <th className="text-center"> Calories </th>
+                    <th className="text-center"> Quantity </th>
+                    <th /><th />
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.rows.map((item, idx) => (
+                    <tr id="addr0" key={idx}>
+                      <td>{idx}</td>
+                      <td>
+                        <input
+                          type="text"
+                          name="name"
+                          value={this.state.rows[idx].name}
+                          onChange={this.handleChange(idx)}
+                          className="form-control"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          name="calories"
+                          value={this.state.rows[idx].calories}
+                          onChange={this.handleChange(idx)}
+                          className="form-control"
+                        />
+                      </td>
+
+                      <td>
+                        <input
+                          type="text"
+                          name="quantity"
+                          value={this.state.rows[idx].quantity}
+                          onChange={this.handleChange(idx)}
+                          className="form-control"
+                        />
+                      </td>
+
+                      <td>
+                        <button
+                          className="btn btn-outline-danger btn-sm"
+                          onClick={this.handleOKButton(idx)}
+                        >
+                          Save
+                        </button>
+                      </td>
+
+                      <td>
+                        <button
+                          className="btn btn-outline-danger btn-sm"
+                          onClick={this.handleRemoveSpecificRow(idx)}
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <button onClick={this.handleAddRow} className="btn btn-primary">
+                Add New Item
+              </button>
+              <button
+                onClick={this.handleRemoveRow}
+                className="btn btn-danger float-right"
+              >
+                Delete Last Item
+              </button>
+            </div>
+          </div>
+        </div>
+
             
             <Navbar/>
             </div>
