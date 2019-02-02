@@ -7,7 +7,7 @@ class Foodmenu extends React.Component{
     super(props);
     this.state = {
         data: [],
-        quantity: ''
+        quantity: '1'
     }
     this.onAddClick = this.onAddClick.bind(this);
     this.handleQuantityChange = this.handleQuantityChange.bind(this);

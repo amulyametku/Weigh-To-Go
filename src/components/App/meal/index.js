@@ -9,6 +9,7 @@ class Meal extends React.Component{
         super(props);
         this.routeChange = this.routeChange.bind(this);
         this.calculateTotalCalories = this.calculateTotalCalories.bind(this);
+        this.handleOKButton = this.handleOKButton.bind(this);
         this.state = {
             id : '',
             name : '',
@@ -37,6 +38,9 @@ class Meal extends React.Component{
         return calories * quantity;
     }
   
+    handleOKButton(){
+        console.log('added');
+    }
 
     render(){
         console.log('from parent'+ this.state.quantity);
@@ -51,14 +55,13 @@ class Meal extends React.Component{
                 </Title>
             </Wrapper>
 
-            {/* <h1> Items consumed </h1> */}
 
             <Table responsive striped bordered hover>
             <thead>
           
                 <tr>
                 <th> NAME </th>
-                <th> CALORIES </th>
+                <th> CALORIES(For 100 g) </th>
                 <th> QUANTITY </th>
                 <th> TOTAL CALORIES </th>
                 </tr>
@@ -69,7 +72,7 @@ class Meal extends React.Component{
                 <td>{this.calculateTotalCalories(this.state.calories, this.state.quantity)}</td>
                 <td> 
                     <ButtonGroup >
-                        <Button_OK>OK</ Button_OK>
+                        <Button_OK onclick={this.handleOKButton}>OK</ Button_OK>
                         <Button_Cancel>Cancel</Button_Cancel>
                     </ButtonGroup>
                 </td>
