@@ -80,7 +80,7 @@ class Foodmenu extends React.Component{
                 <tr key={index} >
                         <td>{foodItem.name}</td>
                         <td>{foodItem.calories}</td>                        
-                        <td>  <input type="text" ref= {"first val" + this.props.index} name="quantity" value={this.state.quantity} onChange={this.handleQuantityChange}/></td>
+                        <td>  <input type="text" ref= {"first val" + this.props.index} name="quantity" autoFocus value={this.state.quantity} onChange={this.handleQuantityChange}/></td>
                         <td>  <Button bsStyle="primary" bsSize="small" onClick={() => this.onAddClick(foodItem)}>Add</Button></td>
                 </tr>
             )

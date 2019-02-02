@@ -1,15 +1,14 @@
 import React , { PureComponent }from "react";
-import styled from "styled-components"
-import { withRouter } from 'react-router-dom';
-import Foodmenu from "../foodmenu";
-import FoodTable from "../../foodTable";
-import { Table  } from 'react-bootstrap';
+import styled from "styled-components";
+import { Table, ButtonGroup  } from 'react-bootstrap';
+import Navbar from "../navbar";
 
 class Meal extends React.Component{
   
     constructor(props){
         super(props);
         this.routeChange = this.routeChange.bind(this);
+        this.calculateTotalCalories = this.calculateTotalCalories.bind(this);
         this.state = {
             id : '',
             name : '',
@@ -34,6 +33,9 @@ class Meal extends React.Component{
         }
 
 
+    calculateTotalCalories(calories, quantity){
+        return calories * quantity;
+    }
   
 
     render(){
@@ -58,18 +60,25 @@ class Meal extends React.Component{
                 <th> NAME </th>
                 <th> CALORIES </th>
                 <th> QUANTITY </th>
+                <th> TOTAL CALORIES </th>
                 </tr>
                 <tr>
                 <td>{this.state.name}</td> 
                 <td>{this.state.calories}</td> 
                 <td>{this.state.quantity}</td> 
-                {/* <td> <Button> OK </Button> </td> */}
+                <td>{this.calculateTotalCalories(this.state.calories, this.state.quantity)}</td>
+                <td> 
+                    <ButtonGroup >
+                        <Button_OK>OK</ Button_OK>
+                        <Button_Cancel>Cancel</Button_Cancel>
+                    </ButtonGroup>
+                </td>
                 </tr> 
         
             </thead>
             </Table>
             
-
+            <Navbar/>
             </div>
         );
     }
@@ -89,7 +98,6 @@ const Wrapper = styled.section`
 const Coloumn = styled.div`
   float : right;
 `;
-
 
 const Button = styled.button`
   /* Adapt the colors based on primary prop */
@@ -113,5 +121,38 @@ const Button = styled.button`
     content: '➕';
   }
 `;
+
+
+
+
+const  Button_OK = styled.button`
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 8px;
+  margin: 2px 1px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+`;
+const Button_Cancel = styled.button`
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 10px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 8px;
+  margin: 2px 1px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+`;
+
 
 export default Meal;
