@@ -21,10 +21,10 @@ class Meal extends React.Component{
     componentDidMount(){
         console.log(this.props.location.state);
         const item = {
-            id: '',
-            name: '',
-            calories: '',
-            quantity: ''
+            id: this.props.location.state.id,
+            name: this.props.location.state.name,
+            calories: this.props.location.state.calories,
+            quantity: this.props.location.state.quantity
           };
         this.setState({
             rows: [...this.state.rows, item]        
