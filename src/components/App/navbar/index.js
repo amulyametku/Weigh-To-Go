@@ -3,7 +3,6 @@ import '../../App/app.css';
 
 class Navbar extends React.Component{
     render(){
-        console.log("Navbar");
 
         return(
         <div>

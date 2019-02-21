@@ -4,7 +4,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Foodmenu from '../foodmenu/index';
 
-class Breakfast extends React.Component{
+
+class Lunch extends React.Component{
   
   state = {
     selectedItems: [],
@@ -27,7 +28,7 @@ class Breakfast extends React.Component{
     }
 
     onAddClick = (foodItem) => {
-      console.log('Quantity in breaky: ' + foodItem.quantity);
+      console.log('Quantity in lunch: ' + foodItem.quantity);
       
       this.setState((state) => {
           const {selectedItems} = state;
@@ -57,6 +58,8 @@ class Breakfast extends React.Component{
       })
       .then(console.log('Saved: '  + this.state.selectedItems))
       .catch(() => console.log("Can’t access " + url + " response. "))
+
+
     }
     
 
@@ -66,7 +69,7 @@ class Breakfast extends React.Component{
         <div>
             <Wrapper>
                 <Title>
-                    Breakfast
+                    Lunch
                     <Coloumn> 
                       <Button onClick={this.handleDialogOpen}> Add item </Button>
                     </Coloumn>
@@ -80,10 +83,9 @@ class Breakfast extends React.Component{
             </Dialog>
             {
                 this.state.selectedItems.map(item =>
-
-                   <List> 
+                   <p> 
                         {item.name} {item.calories} {item.quantity}
-                   </List>
+                   </p>
                 )
                 
             }
@@ -165,4 +167,4 @@ const Button_Cancel = styled.button`
 `;
 
 
-export default Breakfast;
+export default Lunch;

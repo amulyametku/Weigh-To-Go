@@ -1,22 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Breakfast from "./breakfast/index";
+import Meal from "./meal/index";
 import Foodmenu from "./foodmenu/index";
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom'
 import Recipes from './recipes';
 import SignInForm from './pages/SignInForm';
 import SignUpForm from './pages/SignUpForm';
 import '../App/app.css';
-import FoodTable from './foodtable';
 
 class App extends React.Component {
     render(){
         return(
             <Router>
             <div>
-              <Route exact path="/" component={Breakfast}/>
+              <Route exact path="/" component={Meal}/>
               <Route path="/foodmenu" component={Foodmenu}/> 
-              <Route path="/foodtable" component={FoodTable}/> 
               <Route path="/recipes" component={Recipes}/> 
               <Route path="/signin" component={SignInForm}/> 
               <Route path="/signup" component={SignUpForm}/>

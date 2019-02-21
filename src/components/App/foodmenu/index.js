@@ -4,39 +4,13 @@ import { Table, Button } from 'react-bootstrap';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
-var fooddata = [
-  {
-    id: 1,
-    name: "Banana",
-    calorie: 80
-  },
-  {
-    id: 2,
-    name: "Apple",
-    calorie: 75
-  },
-  {
-    id: 3,
-    name: "Walnuts",
-    calorie: 95
-  }
-]
-
-function MyListItem({ foodItem, onAddClick }) {
-  return (
-    <ListItem  key={`item-${foodItem.id}`} button onClick={() => onAddClick(foodItem)}>
-    {foodItem.name} {foodItem.calories}
-    </ListItem>
-  )
-}
-
 class Foodmenu extends React.Component {
   constructor(props) {
     super(props); 
     this.state = {
       data: [],
-      quantity: '1'
-  }
+    }
+    this.handleQuantityChange = this.handleQuantityChange.bind(this);
   }
 
   componentDidMount(){
@@ -66,16 +40,16 @@ class Foodmenu extends React.Component {
    
   }
 
+  handleQuantityChange() {
+    //this.setState({quantity: event.target.value});
+    console.log('quanity selected' + event.target.value);
+  }
+
+  
 
   render() {
 
     return (
-      // <List>
-      //   {
-      //     this.props.contents.map(foodItem=> <MyListItem foodItem={foodItem} onAddClick={this.props.onAddClick} />)
-      //   }
-      // </List>
-      
       <div>
         <Table striped bordered condensed hover>
         <thead>
@@ -86,13 +60,13 @@ class Foodmenu extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {} 
+         
             {this.state.data.map((foodItem, index) => {
              return (
                 <tr key={index} >
                         <td>{foodItem.name}</td>
                         <td>{foodItem.calories}</td>                        
-                        <td>  <input type="text" ref= {"first val" + this.props.index} name="quantity" autoFocus value={this.state.quantity} /></td>
+                        <td>  <input type="text" name="quantity" autoFocus value={this.state.data.quantity} onChange={this.handleQuantityChange}/></td>
                         <td>  <Button bsStyle="primary" bsSize="small" onClick={() => this.props.onAddClick(foodItem)}>Add</Button></td>
                 </tr>
             )
@@ -204,3 +178,31 @@ class Foodmenu extends React.Component{
 }
 */
 export default Foodmenu;
+
+/*
+
+var fooddata = {
+  content: {
+      food: [
+        {
+          id: 1,
+          name: "Banana",
+          calorie: 80,
+          quantity: ''
+        },
+        {
+          id: 2,
+          name: "Apple",
+          calorie: 75,
+          quantity: ''
+        },
+        {
+          id: 3,
+          name: "Walnuts",
+          calorie: 95,
+          quantity: ''
+        }
+      ]
+   }
+};
+*/
