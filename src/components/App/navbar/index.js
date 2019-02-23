@@ -7,7 +7,7 @@ class Navbar extends React.Component{
         return(
         <div>
         <ul>
-        <li><a class="active" href="/">My Day</a></li>
+        <li><a href="/">My Day</a></li>
         <li><a href="#news">Log</a></li>
         <li><a href="recipes">Recipes</a></li>
         <li><a href="#about">My Profile</a></li>

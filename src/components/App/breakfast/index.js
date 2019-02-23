@@ -3,18 +3,35 @@ import styled from "styled-components";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Foodmenu from '../foodmenu/index';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+const style = {
+  margin: 0,
+  top: 'auto',
+  right: 20,
+  bottom: 1010,
+  left: 'auto',
+  position: 'fixed',
+};
 
 class Breakfast extends React.Component{
   
   state = {
     selectedItems: [],
     selectDialogOpen: false,
+    Total_Calories : ''
   }
 
     constructor(props){
         super(props);
         this.routeChange = this.routeChange.bind(this);
-        this.onSaveClick = this.onSaveClick.bind(this);
     }
 
     routeChange(){
@@ -26,68 +43,117 @@ class Breakfast extends React.Component{
       this.setState({selectDialogOpen: true})
     }
 
-    onAddClick = (foodItem) => {
+   
+
+    onAddClick = (foodItem, value) => {
       console.log('Quantity in breaky: ' + foodItem.quantity);
       
       this.setState((state) => {
           const {selectedItems} = state;
-          const _items = [...selectedItems, foodItem];
+          const _items = [...selectedItems, {
+            ...foodItem,
+            quantity: value
+          }];
           console.log({_items});
           return {selectedItems: _items, selectDialogOpen:false};
       })
+
+      //save items to database
+  
     }
 
-    onSaveClick(){
-      const url = "http://10.10.200.25:9000/food"; 
-      let headers = new Headers();
-  
-      headers.append('Content-Type', 'application/json');
-      headers.append('Accept', 'application/json');
-  
-      headers.append('Access-Control-Allow-Origin', url);
-      headers.append('Access-Control-Allow-Credentials', 'true');
-  
-      headers.append('GET', 'POST');
-      
-      e.preventDefault();
-      fetch(url, {
-          headers: headers,
-          method: 'POST',
-          body: JSON.stringify(this.state.selectedItems) 
+    handleOnChange = (value, index) => {
+      //console.log("In handleOnChange", e, index)
+      this.setState({
+        selectedItems: this.state.selectedItems.map((obj, i)=> {
+            return {
+              ...obj,
+              quantity: value,
+            }
+        })
       })
-      .then(console.log('Saved: '  + this.state.selectedItems))
-      .catch(() => console.log("Can’t access " + url + " response. "))
     }
-    
+
+    calculateMealCalories = () => {
+
+      var total_calories_count = 0;
+      this.state.selectedItems.map(item =>
+        total_calories_count = total_calories_count + (item.calories * item.quantity) 
+      )
+     console.log(total_calories_count);
+     this.setState({
+        Total_Calories : total_calories_count
+      });
+
+    }
+
+    notifyTotalCalories = () => {
+      console.log('Total cal' , state.Total_Calories);
+    }
+
+    onSaveClick = () => {
+      this.calculateMealCalories();
+      this.notifyTotalCalories();
+    }
 
     render(){
-
+      console.log(this.state.selectedItems)
       return (
         <div>
             <Wrapper>
                 <Title>
-                    Breakfast
-                    <Coloumn> 
-                      <Button onClick={this.handleDialogOpen}> Add item </Button>
-                    </Coloumn>
+                    {this.props.name}                
+                      <Fab size="medium" className="fab" style={style} color="secondary" aria-label="Add"  onClick={this.handleDialogOpen}>
+                        <AddIcon />
+                      </Fab>
                 </Title>
             </Wrapper>
 
 
             <Dialog open={this.state.selectDialogOpen} onClose={this.onAddClick} aria-labelledby="simple-dialog-title">
                 <DialogTitle id="simple-dialog-title">Select food items:</DialogTitle>
-                <Foodmenu onAddClick={this.onAddClick}/>
+                <Foodmenu onAddClick={this.onAddClick} onChange={this.handleOnChange}/>
             </Dialog>
-            {
-                this.state.selectedItems.map(item =>
-
-                   <List> 
-                        {item.name} {item.calories} {item.quantity}
-                   </List>
-                )
+            { 
+                // this.state.selectedItems.map(item =>
+                //    <p>
+                //         {item.name} {item.calories} * {item.quantity} = {item.calories * item.quantity}
+                //         {this.state.Total_Calories}
+                //   </p>
+                // )
+                <Paper>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Fooditem (100g serving)</TableCell>
+                      <TableCell align="right">Calories</TableCell>
+                      <TableCell align="right">Quantity</TableCell>
+                      <TableCell align="right">Total Calories</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {this.state.selectedItems.map(row => (
+                      <TableRow key={row.id}>
+                        <TableCell component="th" scope="row">
+                          {row.name}
+                        </TableCell>
+                        <TableCell align="right">{row.calories}</TableCell>
+                        <TableCell align="right">{row.quantity}</TableCell>
+                        <TableCell align="right">{row.calories*row.quantity}</TableCell>
+                      </TableRow>
+                    
+                    ))}
+                      <TableRow>
+                      <TableCell colSpan={3}>Total</TableCell>
+                      <TableCell align="right">{this.state.Total_Calories}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </Paper>
                 
             }
-            <Button_OK onSaveClick={this.onSaveClick}> Save items </Button_OK>
+            <Button_OK onClick={this.onSaveClick} > Save items </Button_OK>  
+          
         </div>
     );
     }
