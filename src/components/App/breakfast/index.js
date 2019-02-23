@@ -11,6 +11,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+
 
 const style = {
   margin: 0,
@@ -42,8 +44,6 @@ class Breakfast extends React.Component{
     handleDialogOpen = () => {
       this.setState({selectDialogOpen: true})
     }
-
-   
 
     onAddClick = (foodItem, value) => {
       console.log('Quantity in breaky: ' + foodItem.quantity);
@@ -100,6 +100,7 @@ class Breakfast extends React.Component{
       console.log(this.state.selectedItems)
       return (
         <div>
+
             <Wrapper>
                 <Title>
                     {this.props.name}                
@@ -115,12 +116,7 @@ class Breakfast extends React.Component{
                 <Foodmenu onAddClick={this.onAddClick} onChange={this.handleOnChange}/>
             </Dialog>
             { 
-                // this.state.selectedItems.map(item =>
-                //    <p>
-                //         {item.name} {item.calories} * {item.quantity} = {item.calories * item.quantity}
-                //         {this.state.Total_Calories}
-                //   </p>
-                // )
+                
                 <Paper>
                 <Table>
                   <TableHead>

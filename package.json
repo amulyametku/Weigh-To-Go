@@ -18,6 +18,7 @@
     "lokijs": "^1.5.6",
     "react": "^16.8.1",
     "react-bootstrap": "^0.32.4",
+    "react-circular-progressbar": "^1.0.0",
     "react-dom": "^16.8.1",
     "react-json-table": "^0.1.1",
     "react-native-text-ticker": "^0.13.0",

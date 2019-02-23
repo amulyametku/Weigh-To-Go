@@ -1,8 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Table, Button } from 'react-bootstrap';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 
 class Foodmenu extends React.Component {
   constructor(props) {
